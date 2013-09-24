@@ -20,7 +20,7 @@ function Arduino() {
 /*
  * connect: Try to find the arduino in any serial port and open it
  */
- 
+
 Arduino.prototype.connect = function() {
 	this.serialport = undefined;
 	Serial.list(function(error, ports) {
@@ -37,5 +37,17 @@ Arduino.prototype.connect = function() {
 	});
 };
 
-var arduino = new Arduino();
-arduino.connect();
+Arduino.prototype.init = function() {
+	this.serialPort.on('open', function() {
+		console.log('Port open');
+
+		this.serialPort.on('data', function(data) {
+			console.log('Data received ' + data.toString());
+		});
+	});
+};
+
+module.exports = Arduino;
+
+//var arduino = new Arduino();
+//arduino.connect();
