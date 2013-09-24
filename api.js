@@ -14,6 +14,12 @@ app.get('/', function(request, response) {
 	
 });
 
+app.get('/led/:id', function(request, response) {
+	arduino.changeLedState(request.params.id);
+	response.type('text/plain');
+	response.send('OK');
+});
+
 function apiResponse() {
 	console.log('API response to get request')
 	return true;
