@@ -1,0 +1,24 @@
+{
+  "name": "arduino_api",
+  "version": "0.0.0",
+  "description": "RestFul API to communicate with arduino",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/samfcmc/arduino_api.git"
+  },
+  "keywords": [
+    "node",
+    "arduino",
+    "api",
+    "restful"
+  ],
+  "author": "Samuel Coelho",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/samfcmc/arduino_api/issues"
+  }
+}
