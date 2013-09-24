@@ -42,7 +42,7 @@ int readBytes() {
   //End of string
   buffer[i] = '\0';
   
-  Serial.println(buffer);
+  //Serial.println(buffer);
   
   return i;
 }
@@ -64,8 +64,8 @@ void processCommand() {
     id_buffer[j] = buffer[i];
   }
   
-  Serial.println(device);
-  Serial.println(id_buffer);
+  //Serial.println(device);
+  //Serial.println(id_buffer);
   
   //Which one
   id = atoi(id_buffer);

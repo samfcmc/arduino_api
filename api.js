@@ -1,8 +1,7 @@
-var express = require('express');
-var app = express();
-
+var Express = require('express');
 var Arduino = require('./arduino.js');
 
+var app = Express();
 var arduino = new Arduino();
 
 arduino.connect();
