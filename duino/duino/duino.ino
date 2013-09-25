@@ -30,7 +30,8 @@ void loop() {
    //Command has been received
    processCommand();
   }
-  delay(1000);
+  
+  delay(250);
 }
 
 int readBytes() {

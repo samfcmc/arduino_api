@@ -12,7 +12,8 @@ var settings = { baudRate: 9600,
 				flowControl: false, };
 
 var deviceName = 'arduino';
-var serialPort = undefined;
+
+var port = undefined;
 
 function Arduino() {
 }
@@ -22,31 +23,33 @@ function Arduino() {
  */
 
  Arduino.prototype.connect = function() {
+ 	var sp;
  	Serial.list(function(error, ports) {
  		ports.forEach(function(port) {
  			if(port.pnpId.indexOf(deviceName) !== -1) {
  				console.log('Arduino found on port ' + port.comName);
- 				serialPort = new SerialPort(port.comName, settings);
- 				
- 				serialPort.on('open', function() {
+ 				sp = new SerialPort(port.comName, settings);
+ 				sp.on('open', function() {
  					console.log('Port open');
 
- 					serialPort.on('data', function(data) {
+ 					sp.on('data', function(data) {
  						console.log('Data received ' + data.toString());
  					});
  				});
  				return;
  			}
  		});
- 	});
 
- 	if(serialPort === undefined) {
- 		console.log('Cannot find arduino');
- 	}
+ 		port = sp;
+
+ 		if(port === undefined) {
+ 			console.log('Cannot find arduino');
+ 		}
+ 	});
  };
 
  Arduino.prototype.changeLedState = function(led) {
- 	serialPort.write('LED' + led, function(error, results) {
+ 	port.write('LED' + led, function(error, results) {
  		console.log(error);
  		console.log(results);
  	});
