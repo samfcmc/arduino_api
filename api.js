@@ -16,13 +16,18 @@ app.get('/', function(request, response) {
 
 app.get('/led/:id', function(request, response) {
 	arduino.changeLedState(request.params.id);
-	response.type('text/plain');
-	response.send('OK');
+	sendJsonResponse(response, {led : {state : 'test'}});	
 });
 
 function apiResponse() {
 	console.log('API response to get request')
 	return true;
+}
+
+function sendJsonResponse(response, json) {
+	response.type('application/json');
+	response.setHeader('Access-Control-Allow-Origin', '*');
+	response.send(json);
 }
 
 module.exports = app;

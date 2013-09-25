@@ -13,7 +13,7 @@ const int BUFFER_SIZE = 25;
 
 char buffer[BUFFER_SIZE];
 
-boolean led_states[] = {0, 0, 0};
+boolean led_states[] = {false, false, false};
 
 void setup() {
  int i;
@@ -78,7 +78,7 @@ void processCommand() {
 }
 
 inline void changeLedState(int led_id) {
- int state = led_states[led_id];
+ boolean state = led_states[led_id];
  
  if(state) {
    digitalWrite(LED_PINS[led_id], LOW);
