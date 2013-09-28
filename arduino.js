@@ -49,7 +49,8 @@ function Arduino() {
  };
 
  Arduino.prototype.changeLedState = function(led) {
- 	port.write('LED' + led, function(error, results) {
+ 	var command = 'LED-' + led;
+ 	port.write(command, function(error, results) {
  		console.log(error);
  		console.log(results);
  	});
