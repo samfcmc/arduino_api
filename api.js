@@ -19,6 +19,11 @@ app.get('/led/:id', function(request, response) {
 	sendJsonResponse(response, {led : {state : 'test'}});	
 });
 
+app.get('/leds', function(request, response) {
+	arduino.getLedsStates();
+	sendJsonResponse(response, {leds : {msg : 'test'}});
+});
+
 function apiResponse() {
 	console.log('API response to get request')
 	return true;
