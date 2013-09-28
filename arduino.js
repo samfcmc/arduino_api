@@ -54,7 +54,17 @@ function Arduino() {
  		console.log(error);
  		console.log(results);
  	});
- }
+ };
+
+ Arduino.prototype.getLedsStates = function() {
+ 	var command = 'LED-STAT';
+
+ 	port.write(command, function(error, results) {
+ 		console.log(error);
+ 		console.log(results);
+ 		console.log('Led state');
+ 	});
+ };
 
 module.exports = Arduino;
 

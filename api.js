@@ -26,6 +26,9 @@ function apiResponse() {
 
 function sendJsonResponse(response, json) {
 	response.type('application/json');
+
+	//To deal with anoying chrome error
+	//Not sure if it's the best solution or not
 	response.setHeader('Access-Control-Allow-Origin', '*');
 	response.send(json);
 }
