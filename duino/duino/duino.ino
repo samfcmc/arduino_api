@@ -46,11 +46,11 @@ int readBytes() {
 }
 
 /*
- * processCommand: Read buffer and decode de command send
+ * processCommand: Read buffer and decode de command sent
  * through serial communication. Commands should be like
  * DEV-ARGS (DEV = device to control size: 3 chars, 
  *            ARGS = arguments size: 4 chars)
- */ 
+ */
 void processCommand() {
   int i, j;
   const int device_letters = 3;
@@ -64,20 +64,20 @@ void processCommand() {
     device[i] = buffer[i]; 
   }
   device[i] = '\0';
-  
+
   //If command is not correct formatted
   if(buffer[i] != '-') {
-   Serial.println("Error");
-   return; 
+    Serial.println("Error");
+    return; 
   }
-  
+
   //Read arguments  
   for(j = 0, i++; j < arguments_letters && buffer[i] != '\0'; j++, i++) {
     arguments[j] = buffer[i];
   }
-  
+
   arguments[j] = '\0';
-  
+
   //Serial.println(device);
   //Serial.println(arguments);
 
@@ -90,21 +90,21 @@ void processCommand() {
  * AS YOU WANT AND AS IT RESPECTS THE SINTAX
  */
 inline void executeCommand(char *device, char *arguments) {
- if(!strcmp(device, "LED")) {
-  if(!strcmp(arguments, "STAT")) {
-    //Get leds states
-    getLedsStates();
+  if(!strcmp(device, "LED")) {
+    if(!strcmp(arguments, "STAT")) {
+      //Get leds states
+      getLedsStates();
+    }
+    else {
+      //Change led state
+      changeLedState(atoi(arguments));
+    } 
   }
+
   else {
-    //Change led state
-    changeLedState(atoi(arguments));
-  } 
- }
- 
- else {
-   Serial.println("No Device");
- }
-   
+    Serial.println("No Device");
+  }
+
 }
 
 /*
@@ -124,23 +124,24 @@ inline void changeLedState(int led_id) {
   }
 
   led_states[led_id] = !state;
-  
-  Serial.println(led_states[led_id]);
+
+  Serial.print(led_states[led_id]);
 }
 
 void getLedsStates() {
   int i, j;
   char message[N_LEDS + N_LEDS + 1];
-  
+
   for(j = 0, i = 0; i < N_LEDS; i++, j++) {
     message[j] = led_states[i] ? '1' : '0';
     message[++j] = ':';
   }
-    
+
   message[j] = '\0';
   Serial.println(message);
-  
+
 }
+
 
 
 
