@@ -124,6 +124,8 @@ inline void changeLedState(int led_id) {
   }
 
   led_states[led_id] = !state;
+  
+  Serial.println(led_states[led_id]);
 }
 
 void getLedsStates() {
