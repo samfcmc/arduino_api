@@ -4,16 +4,21 @@
 
 var Serial = require('serialport');
 var SerialPort = Serial.SerialPort;
-//var portName = '/dev/ttyACM0';
+
 var settings = { baudRate: 9600,
 				dataBits: 8,
 				parity: 'none', 
 				stopBits: 1,
-				flowControl: false, };
+				flowControl: false,
+				  };
 
 var deviceName = 'arduino';
 
-var port = undefined;
+var port;
+
+var receiveDataFunction = function(data) {
+	console.log('Default receive data function ' + data);
+};
 
 function Arduino() {
 }
@@ -30,10 +35,9 @@ function Arduino() {
  				console.log('Arduino found on port ' + port.comName);
  				sp = new SerialPort(port.comName, settings);
  				sp.on('open', function() {
- 					console.log('Port open');
-
+ 					console.log('Port is opened');
  					sp.on('data', function(data) {
- 						console.log('Data received ' + data.toString());
+ 						receiveDataFunction(data);
  					});
  				});
  				return;
@@ -48,12 +52,35 @@ function Arduino() {
  	});
  };
 
- Arduino.prototype.changeLedState = function(led) {
+ Arduino.prototype.sendData = function(data, receiveDataF) {
+ 	receiveDataFunction = receiveDataF;
+
+ 	port.write(data, function(error, results) {
+ 		if(error) {
+ 			console.log('Error: ' + error);
+ 		}
+ 		console.log('Results: ' + results);
+ 	})
+ };
+
+ Arduino.prototype.setReceiveDataHandler = function(handler) {
+ 	port.on('data', function(data) {
+ 		handler(data);
+ 	});
+ };
+
+ Arduino.prototype.changeLedState = function(led, responseFunction) {
  	var command = 'LED-' + led;
+
+ 	var handler = function(data) {
+ 		console.log('Another handler ' + data);
+ 	}
+
  	port.write(command, function(error, results) {
  		console.log(error);
  		console.log(results);
  	});
+
  };
 
  Arduino.prototype.getLedsStates = function() {
